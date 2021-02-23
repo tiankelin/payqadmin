@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+    <meta charset="utf-8">
+    <!--<meta name="viewport" content="height=device-height">-->
+
+    <meta name="referrer" content="never">
+
+    <!--<meta http-equiv="pragram" content="no-cache">
+		<meta http-equiv="cache-control" content="no-cache, no-store, must-revalidate">
+		<meta http-equiv="expires" content="0">-->
+    <link rel ="shortcut icon" type="image/x-icon" href="./static/favicon.ico">
+    <!-- <link rel="stylesheet" type="text/css" href="static/global.css"> -->
+    <title>瓶安用气</title>
+     <script type="text/javascript"  src="https://webapi.amap.com/maps?v=1.4.15&key=ea5eb643e324a0fee214b483501ccb03&plugin=AMap.Geocoder,AMap.GraspRoad,AMap.MouseTool,AMap.PolyEditor,AMap.CircleEditor,AMap.AdvancedInfoWindow,AMap.Autocomplete,AMap.PlaceSearch,AMap.ToolBar,AMap.Polygon"></script>
+      <script src="https://webapi.amap.com/ui/1.1/main.js"></script>
+     <script type="text/javascript" src="static/Vue.js"></script>
+
+     <!--<script type="text/javascript" src="https://unpkg.com/view-design@4.2.0/dist/iview.min.js"></script>-->
+   	 <!--<script>!window.iview && document.write(unescape('%3Cscript src="static/iview.js"%3E%3C/script%3E'))</script>-->
+			<script src="static/iview.js"></script>
+   	 <!--<link rel="stylesheet" type="text/css" href="https://unpkg.com/view-design@4.2.0/dist/styles/iview.css">-->
+		 <!--<script>!window.iview && document.write(unescape('%3Clink href="static/iview.css" rel="stylesheet"%3E%3C/link%3E'))</script>-->
+			<link rel="stylesheet" href="static/iview.css" />
+   	 <!-- <script src="https://unpkg.com/mqtt@4.1.0/dist/mqtt.min.js" type="text/javascript" ></script> -->
+      <script src="static/mqtt.js"></script>
+
+
+		<!--<script src="https://webapi.amap.com/ui/1.1/main.js?v=1.1.1"></script>-->
+		<script src="https://cdn.bootcss.com/echarts/4.6.0/echarts.min.js" type="text/javascript" ></script>
+		<!-- <script>!window.mqtt && document.write(unescape('%3Cscript  src="static/mqtt.js"%3E%3C/script%3E'))</script> -->
+ 	 <script>!window.echarts && document.write(unescape('%3Cscript  src="static/echarts.min.js"%3E%3C/script%3E'))</script>
+
+		 <!--<script type="text/javascript" src="static/mqtt.js"></script>-->
+		<!--<script src="https://cdnjs.cloudflare.com/ajax/libs/paho-mqtt/1.0.1/mqttws31.min.js" type="text/javascript" type="text/javascript"></script>-->
+
+		<!--<script type="text/javascript" src="static/echarts.min.js"></script>-->
+		 <!--<script type="text/javascript" src="static/iview.js"></script>-->
+
+
+  </head>
+  <body>
+    <div id="app"></div>
+    <!-- built files will be auto injected -->
+  </body>
+
+
+  <script type="text/javascript" >
+//				document.addEventListener（'touchstart',()=>{}，{passive：true}）;
+  			setInterval(function() {
+				document.querySelectorAll(".el-cascader-node__label").forEach(el => {
+					el.onclick = function() {
+						if(this.previousElementSibling) this.previousElementSibling.click();
+					};
+				});
+			}, 1000);
+
+  </script>
+  <style type="text/css">
+  	.el-radio__inner{
+		border: 0;
+		background: 0;
+	}
+	.el-radio__input.is-checked .el-radio__inner{
+		border: 0;
+		background:0
+	}
+	.el-scrollbar__wrap{
+		height: 204px;
+	}
+	* {
+    touch-action: pan-y;
+	}
+	.ivu-message-notice-with-background{
+		font-size: 18px;
+	}
+	.viewer-footer{
+		overflow: visible!important;
+	}
+	.viewer-toolbar li{
+		/*display: none!important;*/
+	}
+	.viewer-footer .viewer-prev,.viewer-footer .viewer-next{
+		position: absolute;
+		top: -400px!important;
+		z-index: 10000;
+		width: 100px!important;
+		height: 100px!important;
+		display: block!important;
+		box-shadow: 0 2px 4px 0 #ccc;
+	}
+	.viewer-footer .viewer-prev{
+		left: 200px!important;
+		background: #F3F3F3 url('static/img/left.png') no-repeat center!important;
+	}
+	.viewer-footer .viewer-next{
+		right: 200px!important;
+		background: #F3F3F3 url('static/img/right.png') no-repeat center!important;
+	}
+	.viewer-container .viewer-button{
+		width: 120px!important;
+		height: 120px!important;
+		right:-60px!important;
+		top: -60px!important;
+	}
+	.viewer-container .viewer-button::before{
+		background:rgba(0, 0, 0, 0.3) url('static/img/close.png') center no-repeat !important;
+		left:30px!important;
+		bottom:28px!important;
+	}
+.el-input__inner {
+		height: 32px;
+		line-height: 32px;
+	}
+
+.el-input__icon {
+  line-height: 32px;
+}
+.ivu-modal-body{
+	text-align: center;
+}
+.ivu-modal-close .ivu-icon-ios-close{
+	font-size: 44px;
+	margin-top: -4px;
+  color: #333;
+}
+  </style>
+</html>
+<!--style="-webkit-filter: grayscale(100%);filter:progid:DXImageTransform.Microsoft.BasicImage(graysale=1);"-->
