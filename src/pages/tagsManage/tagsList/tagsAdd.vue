@@ -7,7 +7,7 @@
 		<div class="mainBody">
 			<Form :label-width="120" v-has='"tagsList-add"'>
 				<FormItem label="所属组织" class='organize star'>					
-					<el-cascader filterable :show-all-levels="false" :options="options" :props="{ checkStrictly: true }" clearable v-model="organize" @change='organizeSelected'></el-cascader>
+					<el-cascader :show-all-levels="false" :options="options" :props="{ checkStrictly: true }" clearable v-model="organize" @change='organizeSelected'></el-cascader>
 				</FormItem>
 				<FormItem label="标签前缀" class='star'>
 					<Input maxlength="6" show-word-limit v-model='prefix' @on-change='prefixChange' @on-keyup="prefix=prefix.replace(/[^A-Z0-9]/g,'')" 

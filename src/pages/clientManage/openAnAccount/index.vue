@@ -6,12 +6,12 @@
 		</div>
 		<div class="mainBody">
 			<Steps :current="current" style='padding-top:15px;position: relative;'>
-				 <!--<div style="position: absolute;left: 0;top:0;width:12%;height:100%;cursor: pointer;z-index:100" @click='handleClick0'></div>
+				<!--<div style="position: absolute;left: 0;top:0;width:12%;height:100%;cursor: pointer;z-index:100" @click='handleClick0'></div>
 				<div style="position: absolute;left:18%;top:0;width:12%;height:100%;cursor: pointer;z-index:100" @click='handleClick1'></div>
 				<div style="position: absolute;left:36%;top:0;width:16%;height:100%;cursor: pointer;z-index:100" @click='handleClick2'></div>
 				<div style="position: absolute;left:55%;top:0;width:14%;height:100%;cursor: pointer;z-index:100" @click='handleClick3'></div>
 				<div style="position: absolute;left:73%;top:0;width:14%;height:100%;cursor: pointer;z-index:100" @click='handleClick4'></div>
-				<div style="position: absolute;left:93%;top:0;width:8%;height:100%;cursor: pointer;z-index:100" @click='handleClick5'></div> -->
+				<div style="position: absolute;left:93%;top:0;width:8%;height:100%;cursor: pointer;z-index:100" @click='handleClick5'></div>-->
 
 				<Step title="基本信息" style='text-align: left;'>
 				</Step>
@@ -399,8 +399,7 @@
 								</Col>-->
 
 								<Col span="18">
-								<Select v-model="khitem.occSpec" class='occSpec' @on-change='changeOccSpec1(khitem.occSpec,khindex)'
-									style="width: 350px;margin: 6px 0;" label-in-value placeholder='请选择钢瓶'>
+								<Select v-model="khitem.occSpec" class='occSpec' @on-change='changeOccSpec1(khitem.occSpec,khindex)' style="width: 350px;margin: 6px 0;" label-in-value placeholder='请选择钢瓶'>
 
 									<Option v-for="item in goodsSizeList" :value="item.goodsId" :key="item.goodsId">{{ item.goodsName }}</Option>
 								</Select>
@@ -413,7 +412,7 @@
 							</Row>
 							<Row>
 								<Col span="18">
-								<InputNumber :min='0' v-model="khitem.pledgePrice" placeholder="押金金额" style="width: 350px;"/>
+								<InputNumber :min='0' v-model="khitem.pledgePrice" placeholder="押金金额" style="width: 350px;" />
 								</Col>
 								<Col span="4" offset="1">
 
@@ -421,8 +420,7 @@
 							</Row>
 							<Row>
 								<Col span="18">
-									<DatePicker style='width: 350px;margin: 6px 0;' type="date" placeholder="押瓶开始时间" v-model='khitem.beginTime'
-										format="yyyy-MM-dd"></DatePicker>
+								<DatePicker style='width: 350px;margin: 6px 0;' type="date" placeholder="押瓶开始时间" v-model='khitem.beginTime' format="yyyy-MM-dd"></DatePicker>
 
 								</Col>
 								<Col span="4" offset="1">
@@ -430,8 +428,8 @@
 								</Col>
 							</Row>
 							<Row>
-							<Col span="18">
-								<Input type="textarea" :rows="2" v-model="khitem.remark" placeholder="押瓶备注" style="width: 350px;margin-bottom: 6px;"/>
+								<Col span="18">
+								<Input type="textarea" :rows="2" v-model="khitem.remark" placeholder="押瓶备注" style="width: 350px;margin-bottom: 6px;" />
 								</Col>
 								<Col span="4" offset="1">
 
@@ -1888,7 +1886,7 @@
 						this.isResident = true;
 						this.formValidate.gasSubType = null;
 						this.formValidate.businessName = null;
-						this.hasCert=null;
+						this.hasCert = null;
 
 					} else {
 						this.isResident = false;
@@ -2083,9 +2081,9 @@
 							'depositNumber': item.value1,
 							'depositPic': pic.toString(),
 							'goodsId': item.occSpec,
-							'pledgePrice':item.pledgePrice,
-							'beginTime':item.beginTime?this.common.conformatDat(item.beginTime):'',
-							'remark':item.remark,
+							'pledgePrice': item.pledgePrice,
+							'beginTime': item.beginTime ? this.common.conformatDat(item.beginTime) : '',
+							'remark': item.remark,
 						});
 					}
 				}
@@ -2337,9 +2335,9 @@
 					wars: false,
 					occSpec: this.goodsSizeList.length ? this.goodsSizeList[0].goodsId : '',
 					occSpecName: this.goodsSizeList.length ? this.goodsSizeList[0].goodsName : '',
-					pledgePrice:'',
-					beginTime:'',
-					remark:''
+					pledgePrice: '',
+					beginTime: '',
+					remark: ''
 				});
 				//				}
 
@@ -2787,10 +2785,10 @@
 						}, 1500)
 						return false;
 					}
-          
+
 					this.$refs['formData1'].validate(valid => {
 						if(valid) {
-             
+
 							if(!this.common.checkIDCard(this.formValidate.ID)) {
 								this.warnInfo.idCardInfo = '请输入正确的身份证号码';
 								setTimeout(() => {
@@ -2865,7 +2863,7 @@
 								}, 1500)
 								return false;
 							}
-             
+
 							this.current++;
 						}
 
@@ -2938,6 +2936,13 @@
 					let regs = /^[-a-zA-Z0-9]+$/;
 					let re = new RegExp(regs)
 					for(let item of this.depositform.items) {
+						if(!item.value1) {
+							this.warnInfo.yjdInfo = '押金单号不能为空';
+							setTimeout(() => {
+								this.warnInfo.yjdInfo = '';
+							}, 1500)
+							return false;
+						}
 						if(item.value1.length && !re.test(item.value1)) {
 							this.warnInfo.yjdInfo = '押金单号字符不合法';
 							setTimeout(() => {
@@ -2947,6 +2952,13 @@
 						}
 						if(item.value1.length > 30) {
 							this.warnInfo.yjdInfo = '押金单号内容过长';
+							setTimeout(() => {
+								this.warnInfo.yjdInfo = '';
+							}, 1500)
+							return false;
+						}
+						if(!item.occSpec) {
+							this.warnInfo.yjdInfo = '押金单对应钢瓶不能为空';
 							setTimeout(() => {
 								this.warnInfo.yjdInfo = '';
 							}, 1500)
@@ -3390,7 +3402,7 @@
 	.mainBody {
 		padding: 0 25px 20px;
 	}
-
+	
 	.currentTitle {
 		font-size: 18px;
 		color: #000;
@@ -3398,7 +3410,7 @@
 		padding: 12px 0;
 		text-align: left;
 	}
-
+	
 	.demo-upload-list {
 		display: inline-block;
 		width: 60px;
@@ -3412,12 +3424,12 @@
 		position: relative;
 		margin-right: 4px;
 	}
-
+	
 	.demo-upload-list img {
 		width: 100%;
 		height: 100%;
 	}
-
+	
 	.demo-upload-list-cover {
 		display: none;
 		position: absolute;
@@ -3427,43 +3439,43 @@
 		right: 0;
 		background: rgba(0, 0, 0, .6);
 	}
-
+	
 	.demo-upload-list:hover .demo-upload-list-cover {
 		display: block;
 	}
-
+	
 	.demo-upload-list-cover i {
 		color: #fff;
 		font-size: 20px;
 		cursor: pointer;
 		margin: 0 2px;
 	}
-
+	
 	.currentLabel {
 		/* text-align: left; */
 		color: #000000;
 		font-size: 14px;
 		white-space: nowrap;
 	}
-
+	
 	.currentContent {
 		/* text-align: right; */
 		color: 333;
 		font-size: 14px;
 		padding-right: 2px;
 	}
-
+	
 	.mainBorder>>>.ivu-col {
 		text-align: left;
 	}
-
+	
 	img {
 		width: 90px;
 		height: 90px;
 		display: inline;
 		margin-right: 20px;
 	}
-
+	
 	.star>>>.ivu-form-item-label:before,
 	.stars:before {
 		content: "*";
@@ -3473,74 +3485,74 @@
 		display: inline-block;
 		font-family: SimSun;
 	}
-
+	
 	.errInfo {
 		position: absolute;
 		left: 0;
 		top: 32px;
 		color: #ed4014;
 	}
-
+	
 	.gasForm>>>.ivu-form-item-content {
 		margin-left: 0!important;
 		color: #515a6e;
 	}
-
+	
 	.btnForm {
 		margin-left: 10px;
 	}
-
+	
 	.mainBorder>>>.ivu-input-number-handler-wrap {
 		/*display: none;*/
 	}
-
+	
 	.mainBorder>>>.el-cascader {
 		width: 100%;
 	}
-
+	
 	.mainBorder>>>.el-input__inner {
 		height: 32px;
 		line-height: 32px;
 	}
-
+	
 	.mainBorder>>>.el-input__icon {
 		line-height: 32px;
 	}
-
+	
 	.finishPage p {
 		/*margin-bottom: 3px;*/
 		color: #000;
 	}
-
+	
 	.finishPage>>>.ivu-checkbox-wrapper {
 		color: #000;
 	}
-
+	
 	.bottomNone p {
 		margin-bottom: 0;
 	}
-
+	
 	.bottomSix p {
 		margin-bottom: 4px;
 	}
-
+	
 	.occitem>>>.ivu-form-item-content {
 		margin-left: 0!important;
 	}
-
+	
 	.occitem>>>.ivu-input-number {
 		width: auto;
 	}
-
+	
 	.occSpec {
 		width: 68%;
 		margin-bottom: 5px;
 	}
-
+	
 	.licenseDate>>>.ivu-input-suffix {
 		/*right: 50px;*/
 	}
-
+	
 	.mainBorder>>>.ivu-icon-ios-camera {
 		color: #51B5EA;
 	}

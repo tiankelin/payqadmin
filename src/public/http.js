@@ -7,7 +7,7 @@ import router from '@/router'
 //const baseUrl = 'http://47.111.185.198:8089/';
 const baseUrl = 'https://source.payq-iot.com:8089/';
 // const baseUrl = 'https://sys.payq-iot.com:8089/';
-// const baseUrl = 'http://192.168.0.136:8088/';
+// const baseUrl = 'http://192.168.0.146:8088/';
 // const baseUrl = 'http://192.168.0.142:8088/';
 //const baseUrl = '/';
 

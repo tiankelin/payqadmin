@@ -715,18 +715,9 @@
 				staffNameList: [],
 				uploadList: [],
 				storePicList: [],
-				khindex: 1,
+				khindex: 0,
 				depositform: {
-					items: [{
-						value1: '',
-						khindex: 1,
-						status: 1,
-						depositPicList: [],
-						occSpec: '',
-						pledgePrice: '',
-						beginTime: '',
-						remark: ''
-					}]
+					items: []
 				},
 				//用气量核定
 				yqindex: 1,
@@ -1673,7 +1664,14 @@
 				let re = new RegExp(regs)
 
 				for(let item of this.depositform.items) {
+					if(!item.value1) {
+						this.$Message['warning']({
+							background: true,
+							content: '押金单号不能为空!',
 
+						});
+						return false;
+					}
 					if(item.value1 && item.value1.length && !re.test(item.value1)) {
 						this.$Message['warning']({
 							background: true,
@@ -1686,6 +1684,14 @@
 						this.$Message['warning']({
 							background: true,
 							content: '押金单号内容过长!',
+
+						});
+						return false;
+					}
+					if(!item.occSpec) {
+						this.$Message['warning']({
+							background: true,
+							content: '押金单对应钢瓶不能为空!',
 
 						});
 						return false;
@@ -2249,18 +2255,18 @@
 								})
 							}
 						}
-//
-//						if(extend && extend.storageBottleDetails) {
-//							let bottleDetail = JSON.parse(extend.storageBottleDetails)
-//							for(let item of bottleDetail) {
-//								this.saveBottle.push(item.tag);
-//							}
-//							this.saveBottleNum = this.saveBottle.length;
-//						}
-						if(extend&&extend.orderCountBottles){
-//							this.saveBottleNum = extend.orderCountBottles.orderCountBottleList.length;
+						//
+						//						if(extend && extend.storageBottleDetails) {
+						//							let bottleDetail = JSON.parse(extend.storageBottleDetails)
+						//							for(let item of bottleDetail) {
+						//								this.saveBottle.push(item.tag);
+						//							}
+						//							this.saveBottleNum = this.saveBottle.length;
+						//						}
+						if(extend && extend.orderCountBottles) {
+							//							this.saveBottleNum = extend.orderCountBottles.orderCountBottleList.length;
 							this.saveBottleNum = extend.orderCountBottles.count;
-						}else{
+						} else {
 							this.saveBottleNum = 0;
 						}
 						//用气量核定
