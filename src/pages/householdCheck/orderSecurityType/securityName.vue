@@ -41,7 +41,6 @@
 		name: 'securityName',
 		data() {
 			return {
-				
 				userData: (JSON.parse(this.$store.state.userData)),
 				isDisabled: false,
 				screeHeight: document.documentElement.clientHeight, // 屏幕高				
