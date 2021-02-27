@@ -218,7 +218,7 @@
 					},
 					{
 						title: '实际同步时间',
-						key: 'actualTime',
+						key: 'createTime',
 						minWidth: 180,
 						align: 'center',
 					},

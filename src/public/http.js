@@ -2,10 +2,10 @@ import axios from 'axios'
 import qs from 'qs'
 import store from '@/store/index';
 import router from '@/router'
-// const baseUrl = 'http://test.payq-iot.com:7002/';
+   const baseUrl = 'http://test.payq-iot.com:7002/';
    // const baseUrl = 'http://127.0.0.1:8088/';
 //const baseUrl = 'http://47.111.185.198:8089/';
-const baseUrl = 'https://source.payq-iot.com:8089/';
+//const baseUrl = 'https://source.payq-iot.com:8089/';
 // const baseUrl = 'https://sys.payq-iot.com:8089/';
 // const baseUrl = 'http://192.168.0.146:8088/';
 // const baseUrl = 'http://192.168.0.142:8088/';

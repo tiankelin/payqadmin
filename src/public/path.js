@@ -454,5 +454,9 @@ const pathUrl = {
         'queryBottlesByStaffId':'api/platform/bottle/queryBottlesByStaffId',// 首页员工责任瓶详情
         'activeUserExport':newPath+'file/activeUser/export',//活跃用户统计导出
         'securitycheckGetInfoByUserId':'api/securitycheck/getInfoByUserId',//安检统计未安检客户通过用户id跳转到安检详情
+        'securitychecktypeclassifyList':'api/securitychecktypeclassify/list',// 安检项目名称列表
+        'securitychecktypeclassifySave':'api/securitychecktypeclassify/save',// 安检项目名称新增
+        'securitychecktypeclassifyDelete':'api/securitychecktypeclassify/delete',// 安检项目名称删除
+        'securitychecktypeclassifyUpdate':'api/securitychecktypeclassify/update',// 安检项目名称更新
 }
 export const pathUrls = pathUrl;

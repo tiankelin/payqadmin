@@ -13,9 +13,9 @@
             <Option v-for="item in userTypeList" :value="item.id" :key="item.id">{{ item.typeName }}</Option>
           </Select>
         </FormItem>
-        <FormItem label="安检项目名称">
-          <Select v-model="formSearch.securityName" style="width:170px" clearable placeholder="请选择安检项目名称" @on-change='nameChange'>
-            <Option :value='item' v-for='(item,index) in nameList' :key='index'>{{item}}</Option>
+        <FormItem label="安检项分类">
+          <Select v-model="formSearch.securityName" style="width:170px" clearable placeholder="请选择安检项分类" @on-change='nameChange'>
+            <Option :value='item.id' v-for='(item,index) in nameList' :key='index'>{{item.typeName}}</Option>
           </Select>
         </FormItem>
         <!--<FormItem label="是否启用">
@@ -24,9 +24,7 @@
 						<Option value='0'>否</Option>
 					</Select>
 				</FormItem>
-				<FormItem label="建档组织">
-					<Cascader :data="options" clearable v-model="formSearch.organize" change-on-select @on-change='changeCascader' :render-format="format" style="width:170px"></Cascader>
-				</FormItem>
+				
 
 
 
@@ -41,6 +39,7 @@
           <Button type="primary" @click='handleSearch'>查询</Button>
           <!--<Button type="success" @click='handleAdd'>新增</Button>-->
           <Button type="success" @click='addNew' v-has='776'>添加</Button>
+          <Button type="info" @click='handleChecktypeclassify'>新增安检项分类</Button>
         </FormItem>
       </Form>
     </div>
@@ -61,7 +60,10 @@
         <template slot-scope="{ row, index }" slot="typeName">
           <span v-if='!row.isEdit'>{{row.typeName}}</span>
           <span v-else-if='row.isEdit&&formSearch.securityName&&!row.typeId'>{{formSearch.securityName}}</span>
-          <Input type="text" :value="row.typeName" v-else v-model='row.typeName' />
+          <!--<Input type="text" :value="row.typeName" v-else v-model='row.typeName' />-->
+          <Select v-model="row.classifyId" v-else style="height: 28px;line-height: 28px;">
+          		<Option v-for="item in nameList" :value="item.id" :key="item.id">{{ item.typeName }}</Option>
+          </Select>
         </template>
         <template slot-scope="{ row, index }" slot="typeContent">
           <span v-if='!row.isEdit'>{{row.typeContent}}</span>
@@ -89,43 +91,40 @@
 			</div>-->
 
     </div>
+    <securityName v-if='securityInfo' @closeInfo='closeInfoMethod'></securityName>
   </div>
 </template>
 
 <script>
   import { pathUrls } from '@/public/path';
 	import _http from '@/public/http';
+	import securityName from './securityName';
 	export default {
 		name: 'orderSecurityType',
+		components:{
+			securityName
+		},
 		data() {
 			return {
+				securityInfo:false,
         isDisabled: false,
 				tableHeight: 'auto',
 				screeHeight: document.documentElement.clientHeight, // 屏幕高
 				userTypeList:[],
 				nameList:[],
 				userData: (JSON.parse(this.$store.state.userData)),
-				options: [],
+				
 				formSearch: {
 					userType:'',
 					isAlive: '',
-					organize: '',
 					securityName: '',
 					securityInfo: ''
 				},
 				typeName: '',
 				userTypeName:'',
-				//				count: 0,
-				//				curpage: 1,
-				//				pagesSize: 10,
 				dataList: [],
 				loading: false,
 				columns: [
-					//				{
-					//						type: 'selection',
-					//						width: 60,
-					//						align: 'center',
-					//					},
 					{
 						title: '序号',
 						type: 'index',
@@ -139,7 +138,7 @@
 						slot: 'userType'
 					},
 					{
-						title: '安检项目名称',
+						title: '安检项分类',
 						key: 'typeName',
 						width: 240,
 						align: 'center',
@@ -157,24 +156,8 @@
 						align: 'center',
 						width: 100,
 						slot: 'newActive',
-						//						render: (h, params) => {
-						//							return h('span', {
-						//								attrs: {
-						//									title: params.row.newActive
-						//								},
-						//								style: {
-						//									color:params.row.newActive=='是'?'#409EFF':'#F56C6C'
-						//								},
-						//							}, params.row.newActive);
-						//
-						//						}
+						
 					},
-					//					{
-					//						title: '建档组织',
-					//						key: 'deptName',
-					//						align: 'center',
-					//						width: 200,
-					//					},
 					{
 						title: '操作',
 						slot: 'action',
@@ -185,6 +168,16 @@
 			}
 		},
 		methods: {
+			//查看安检项目名称
+			handleChecktypeclassify(){
+				this.securityInfo=true;
+			},
+			//关闭安检项目名称列表
+			closeInfoMethod(data){
+				this.securityInfo=false;
+				this.getNameList();
+				this.getSecurityTypeList();
+			},
 			//获取安检项目名称
 			getNameList(){
 			_http.http2('get', pathUrls.querySecurityNameList+'?deptId=' + this.userData.deptId, {
@@ -210,9 +203,10 @@
 					'typeDeptId':this.userData.deptId,
 					"typeId": row.typeId,
 					"userType": row.userType || this.formSearch.userType,
-					"typeName": row.typeName||this.formSearch.securityName,
+//					"typeName": row.typeName||this.formSearch.securityName,
 					"typeContent": row.typeContent,
 					"isActive": row.isActive,
+					"classifyId":row.classifyId
 				}
 				if(fData.userType == '') {
 					this.$Message['warning']({
@@ -222,22 +216,15 @@
 					});
 					return false
 				}
-				if(fData.typeName == '') {
+				if(!fData.classifyId) {
 					this.$Message['warning']({
 						background: true,
-						content: '请输入安检项名称!',
+						content: '请选择安检项分类!',
 						duration: 1
 					});
 					return false
 				}
-				if(fData.typeName.length > 32) {
-					this.$Message['warning']({
-						background: true,
-						content: '安检项名称过长!',
-						duration: 1
-					});
-					return false
-				}
+				
 				if(fData.typeContent == '') {
 					this.$Message['warning']({
 						background: true,
@@ -344,53 +331,13 @@
 					isActive: 1
 				});
 			},
-			//自定义组织输入框显示内容
-			format(labels, selectedData) {
-				//				console.log(labels, selectedData)
-				const index = labels.length - 1;
-				const data = selectedData[index] || false;
-				return labels[index];
-			},
-			changeCascader(value, selectedData) {
-				if(value.length) {
-					this.formSearch.organize = value[value.length - 1]
-				} else {
-					this.formSearch.organize = ''
-				}
 
-			},
-			//递归数据
-			getTitle(menus) {
-				return menus.map((menu) => {
-					if(menu.children.length > 0) {
-						this.getTitle(menu.children);
-					}
-					menu.value = menu.deptId;
-					menu.label = menu.name;
-					return menu;
-				})
-			},
-			//获取区域组织函数
-			getOrganize() {
-				let that = this;
-				_http.http2('get', pathUrls.organizationList + '?deptId=' + this.userData.deptId, {}, "form")
-					.then(function(res) {
-						//成功的回调
-
-						if(res) {
-							//							console.log(res);
-							that.options = that.getTitle(res);
-							//							console.log(that.options);
-
-						}
-					})
-			},
 			//获取列表
 			getSecurityTypeList() {
 				this.loading = true
 				_http.http1('post', pathUrls.querySecurityTypeList, {
 					userType: this.formSearch.userType,
-					typeName: this.formSearch.securityName,
+					classifyId: this.formSearch.securityName,
 					typeContent: this.formSearch.securityInfo,
 					deptId: this.formSearch.organize,
 					isActive: this.formSearch.isAlive,
@@ -408,21 +355,15 @@
 					}
 					this.dataList = res.data;
 					this.tableHeight=this.screeHeight-140;
+				}).catch(()=>{
+					this.loading = false;
 				})
 			},
-			//查看详情
-//			handleSee(id) {
-//				this.$router.push('/orderSecurityType/securityInfo' + '/' + id)
-//			},
-
 			//查询
 			handleSearch() {
 				this.getSecurityTypeList()
 			},
-			//新增
-//			handleAdd() {
-//				this.$router.push('/orderSecurityType/securityAdd')
-//			},
+
 			//删除
 			remove(id) {
 				this.$Modal.confirm({
@@ -473,6 +414,7 @@
     margin-right: 10px;
     background: #FFFFFF;
     min-height: calc(100% - 10px);
+    position: relative;
   }
 
   .mainTop {
